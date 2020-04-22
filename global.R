@@ -1,9 +1,10 @@
 ## setup ####
-setwd("~/Dropbox/nycdsa/projects/proj1_covid19")
-library(tidyverse);library(shiny)
+setwd("~/Dropbox/nycdsa/projects/proj1_covid19/Rshiny-Covid19")
+#library(shiny);library(shinydashboard)
+library(tidyverse)
 
 ## data import ####
-covid19.us = read_csv("./data/COVID19_state_20200419.csv")
+covid19.us = read_csv("COVID19_state_20200419.csv")
 
 ## data wrangle ####
 covid19.us = covid19.us %>% mutate( Rate.positive = Infected / Tested, Rate.fatality = Deaths / Infected)

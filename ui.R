@@ -1,33 +1,34 @@
-#
-# This is the user-interface definition of a Shiny web application. You can
-# run the application by clicking 'Run App' above.
-#
-# Find out more about building applications with Shiny here:
-#
-#    http://shiny.rstudio.com/
-#
-
 library(shiny)
+library(shinydashboard)
 
-# Define UI for application that draws a histogram
-shinyUI(fluidPage(
-
-    # Application title
-    titlePanel("Old Faithful Geyser Data"),
-
-    # Sidebar with a slider input for number of bins
-    sidebarLayout(
-        sidebarPanel(
-            sliderInput("bins",
-                        "Number of bins:",
-                        min = 1,
-                        max = 50,
-                        value = 30)
-        ),
-
-        # Show a plot of the generated distribution
-        mainPanel(
-            plotOutput("distPlot")
-        )
+dashboardPage(
+  dashboardHeader(title = "COVID19 Analysis"),
+  dashboardSidebar(
+    sidebarMenu(
+      menuItem("Geology", tabName = "geology", icon = icon("globe-americas")),
+      menuItem("Politics", tabName = "politics", icon = icon("landmark")),
+      menuItem("Economy", tabName = "economy", icon = icon("dollar-sign")),
+      menuItem("People", tabName = "people", icon = icon("users")),
+      menuItem("Medical", tabName = "medical", icon = icon("capsules"))
     )
-))
+  ),
+  dashboardBody()
+)
+
+
+
+# shinyUI(dashboardPage(
+#   dashboardHeader(title = "My Dashboard"),
+#   dashboardSidebar(
+#     
+#     sidebarUserPanel("NYC DSA",
+#                      image = "https://yt3.ggpht.com/-04uuTMHfDz4/AAAAAAAAAAI/AAAAAAAAAAA/Kjeupp-eNNg/s100-c-k-no-rj-c0xffffff/photo.jpg"),
+#     sidebarMenu(
+#       menuItem("Map", tabName = "map", icon = icon("map")),
+#       menuItem("Data", tabName = "data", icon = icon("database"))
+#     )
+#   ),
+#   dashboardBody(
+# 
+#   )
+# ))
