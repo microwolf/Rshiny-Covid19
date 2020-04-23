@@ -2,12 +2,12 @@ library(shiny)
 library(shinydashboard)
 
 dashboardPage(skin = "green",
-  dashboardHeader(title = tags$h2("Covid-19", 
-                          tags$img(src="coronavirus-orange.jpg")), 
-                  titleWidth = 225), 
+  dashboardHeader(title = tags$h2("Covid-19")), 
                   
   dashboardSidebar(
-    sidebarUserPanel(tags$h3("Factors")),
+    #sidebarUserPanel(tags$h3("Sections")),
+    sidebarSearchForm(textId = "searchText", buttonId = "searchButton",
+                      label = "Search..."),
     sidebarMenu(
       menuItem("Overview", tabName = "overview", icon = icon("map-signs")), 
       menuItem("Geology", tabName = "geology", icon = icon("globe-americas")),
