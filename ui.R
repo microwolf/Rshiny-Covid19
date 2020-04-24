@@ -27,7 +27,7 @@ dashboardPage(skin = "green",
       tabItem(tabName = "economy", plotOutput("gdp")), # add gini, top industry, income, unemploye
       tabItem(tabName = "people", plotOutput("pop.density")), # add old people, sex
       tabItem(tabName = "medical", plotOutput("hospitals")), # add pysician, icu bed, pollution, flu, smoking, health spending
-      tabItem(tabName = "aboutme", tags$img(src="LY.jpg",height="50%", width="50%"), tags$h4("Lu Yu"))
+      tabItem(tabName = "aboutme", tags$img(src="LY.jpg",height="100%", width="100%"), tags$h4("Lu Yu"))
       )
   )
 )
