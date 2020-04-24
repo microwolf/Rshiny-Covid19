@@ -11,13 +11,17 @@ shinyServer(function(input, output) {
   # adjust data based on date selected by user
   usToday = reactive({
     us.ts.today = us.ts %>% filter(date == input$date)
-    us.today.number = left_join(us.constant, us.ts.today, by = c("abbr")) #%>% 
-      #filter(pres.elec.2016 == input$party)
+    us.today.number = left_join(us.constant, us.ts.today, by = c("abbr"))
+    
+    if (input$republican) {
+      ps = "Republican"
+    } else {ps = "Democratic"}
+    
     us.today = us.today.number %>% 
       mutate(rate.tested = tested / population,
              rate.positive = infected / tested,
-             rate.fatality = deaths / infected) #%>% 
-      #filter(pres.elec.2016 == input$party)
+             rate.fatality = deaths / infected) %>% 
+      filter(pres.elec.2016 == ps)
     return(us.today)
   })
   
@@ -49,7 +53,6 @@ shinyServer(function(input, output) {
       geom_point()
   })
   
-  
   # economy ####
   output$gdp = renderPlot({
     target = usToday()
@@ -63,13 +66,11 @@ shinyServer(function(input, output) {
       geom_boxplot()
   })
   
-  
   # people ####
   output$pop.density = renderPlot({
     ggplot(data = us, aes(x = pop.density, y = rate.fatality)) +
       geom_point()
   })
-  
   
   # healthcare ####
   output$hospitals = renderPlot({
@@ -89,8 +90,16 @@ shinyServer(function(input, output) {
 # pilot test ####
 test.day = as.Date("2020-03-16")
 test.ts.today = us.ts %>% filter(date == test.day)
-test.gather = gather(test.ts.today, content, number, 4:6)
-test.gather = gather(test.ts.today, content, number, tested, infected, deaths)
+#test.gather = gather(test.ts.today, content, number, 4:6)
+#test.gather = gather(test.ts.today, content, number, tested, infected, deaths)
+
+# test.today.number = left_join(us.constant, test.ts.today, by = c("abbr"))
+# test.today = test.today.number %>% 
+#   mutate(rate.tested = tested / population,
+#          rate.positive = infected / tested,
+#          rate.fatality = deaths / infected) %>% 
+#   filter(pres.elec.2016 == "Republican")
+#new = test.today %>% filter(pres.elec.2016 == "Republican")
 
 
 # unused code ####

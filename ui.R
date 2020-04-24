@@ -25,10 +25,14 @@ dashboardPage(skin = "green",
       menuItem("About Me", tabName = "aboutme", icon = icon("smile-wink")),
       
       # polical stand ####
-      checkboxGroupInput("party", label = tags$h4("State Political Stands"),
-                         choices = list("Republican" = 1, "Democratic" = 2), 
-                         selected = c(1,2)),
-      fluidRow(column(3, verbatimTextOutput("party")))      
+      # checkboxGroupInput("party", label = tags$h4("State Political Stands"),
+      #                    choices = list("Republican" = 1, "Democratic" = 2), 
+      #                    selected = c(1)),
+      checkboxInput("republican", label = tags$h4("Republican"), value = TRUE),
+      #checkboxInput("democratic", label = tags$h4("Democratic"), value = TRUE),
+      fluidRow(column(3, verbatimTextOutput("republican")))
+      
+      # 
     )
   ),
   
