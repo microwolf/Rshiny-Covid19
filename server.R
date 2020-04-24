@@ -1,9 +1,10 @@
 library(shiny)
 library(shinydashboard)
 
+
 shinyServer(function(input, output) {
   output$temperature = renderPlot({
-    ggplot(data = us, aes( y = rate.fatality, x = temperature)) + 
+    ggplot(data = us, aes( y = rate.fatality, x = temperature)) +
       geom_point()
   })
   

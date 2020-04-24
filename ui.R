@@ -6,8 +6,9 @@ dashboardPage(skin = "green",
                   
   dashboardSidebar(
     #sidebarUserPanel(tags$h3("Sections")),
-    sidebarSearchForm(textId = "searchText", buttonId = "searchButton",
-                      label = "Search..."),
+    sidebarUserPanel(tags$img(src="https://cdn.pixabay.com/photo/2020/03/31/02/20/virus-4986015_960_720.png", width = "50%", height = "100%")),
+    #sidebarSearchForm(textId = "searchText", buttonId = "searchButton",
+    #                  label = "Search..."),
     sidebarMenu(
       menuItem("Overview", tabName = "overview", icon = icon("map-signs")), 
       menuItem("Geology", tabName = "geology", icon = icon("globe-americas")),
@@ -16,7 +17,10 @@ dashboardPage(skin = "green",
       menuItem("People", tabName = "people", icon = icon("users")),
       menuItem("Medical", tabName = "medical", icon = icon("hospital-symbol")),
       menuItem("About Me", tabName = "aboutme", icon = icon("smile-wink"))
-    )
+    ),
+    
+    dateInput("date", label = tags$h3("Select Date"), value = "2020-04-19"),
+    fluidRow(column(3, verbatimTextOutput("value")))
   ),
   dashboardBody(
     tabItems(
