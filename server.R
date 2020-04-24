@@ -1,8 +1,24 @@
 library(shiny)
 library(shinydashboard)
 
+#g = ggplot(data = us)
 
 shinyServer(function(input, output) {
+  #output$theDay = renderPrint({input$date})
+  us.constant = us %>% select(-tested, -infected, -deaths)
+  
+  usToday = reactive({
+    us.ts.today = us.ts %>% filter(date == input$date)
+    us.today = left_join(us.constant, us.ts.today, by = c("abbr"))
+    us.today
+  })
+  
+  output$test = renderPlot({
+    ggplot(data = usToday(), aes(x = abbr, y = deaths)) +
+      geom_bar(stat = "identity") +
+      coord_flip()
+  })
+  
   output$temperature = renderPlot({
     ggplot(data = us, aes( y = rate.fatality, x = temperature)) +
       geom_point()

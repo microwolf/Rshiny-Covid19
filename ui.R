@@ -19,19 +19,23 @@ dashboardPage(skin = "green",
       menuItem("About Me", tabName = "aboutme", icon = icon("smile-wink"))
     ),
     
-    dateInput("date", label = tags$h3("Select Date"), value = "2020-04-19"),
-    fluidRow(column(3, verbatimTextOutput("value")))
+    dateInput("date", label = tags$h3("Select Date"), 
+              value = "2020-04-19", min = "2020-03-08"),
+    fluidRow(column(3, verbatimTextOutput("theDay")))
   ),
   dashboardBody(
     tabItems(
       #img(src='Image.png',style="width: 50px")
-      tabItem(tabName = "overview", tags$img(src="coronavirus.jpg", height="100%", width="100%")),
+      tabItem(tabName = "overview", 
+              tags$img(src="coronavirus.jpg", height="100%", width="100%")),
       tabItem(tabName = "geology", plotOutput("temperature")), # add airport, urban
       tabItem(tabName = "politics", plotOutput("pps")), # add govner, senate, house
       tabItem(tabName = "economy", plotOutput("gdp")), # add gini, top industry, income, unemploye
       tabItem(tabName = "people", plotOutput("pop.density")), # add old people, sex
       tabItem(tabName = "medical", plotOutput("hospitals")), # add pysician, icu bed, pollution, flu, smoking, health spending
-      tabItem(tabName = "aboutme", tags$img(src="LY.jpg",height="100%", width="100%"), tags$h4("Lu Yu"))
+      tabItem(tabName = "aboutme", 
+              tags$img(src="LY.jpg",height="100%", width="100%"), tags$h4("Lu Yu"),
+              plotOutput("test"))
       )
   )
 )
