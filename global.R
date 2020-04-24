@@ -58,7 +58,9 @@ pps = right_join(abbr, pps, by = c( "us.state" = "state"))
 
 # case ratios ####
 # calculate ratios for covid19 cases
-us = us %>% mutate( rate.positive = infected / tested, rate.fatality = deaths / infected)
+#us = us %>% mutate( rate.tested = tested / population,
+#                    rate.positive = infected / tested, 
+#                    rate.fatality = deaths / infected)
 
 
 # exclude DC ####
@@ -92,18 +94,23 @@ getDay = function(day){
 ## TO DO ####
 # add interactive: select group, date range bar
 # plots: vs economic status, vs policatical stand
-# plots: mag
+# plots: map
+# add gdp per captia
+# collect temperature
+# categorize state by spring ave temp
 
 ## extras ####
 # connect API so get most updated data
-# collect data: political stand, emergency declare, top industry, num of univ
+# collect data: num of univ
 
 ## Done ####
+# collect polictical stand
 # clean us 50 state covid 19 & features data
 # plot a correlation per each tab
 # read in time series
 # allow only certain dates
 # add interactive: select date
+# add data: top industry, time zone
 
 ## pilot runs ####
 #test = ny[1,1] %>% as.character() %>% as.numeric()

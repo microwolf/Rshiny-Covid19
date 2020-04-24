@@ -10,24 +10,40 @@ dashboardPage(skin = "green",
     #sidebarSearchForm(textId = "searchText", buttonId = "searchButton",
     #                  label = "Search..."),
     sidebarMenu(
+      # date ####
+      dateInput("date", label = tags$h4("Select Date"), 
+                value = "2020-04-19", min = "2020-03-08"),
+      fluidRow(column(3, verbatimTextOutput("date"))),
+      
+      # menu tabs ####
       menuItem("Overview", tabName = "overview", icon = icon("map-signs")), 
       menuItem("Geology", tabName = "geology", icon = icon("globe-americas")),
       menuItem("Politics", tabName = "politics", icon = icon("landmark")),
       menuItem("Economy", tabName = "economy", icon = icon("dollar-sign")),
       menuItem("People", tabName = "people", icon = icon("users")),
       menuItem("Medical", tabName = "medical", icon = icon("hospital-symbol")),
-      menuItem("About Me", tabName = "aboutme", icon = icon("smile-wink"))
-    ),
-    
-    dateInput("date", label = tags$h3("Select Date"), 
-              value = "2020-04-19", min = "2020-03-08"),
-    fluidRow(column(3, verbatimTextOutput("theDay")))
+      menuItem("About Me", tabName = "aboutme", icon = icon("smile-wink")),
+      
+      # polical stand ####
+      checkboxGroupInput("party", label = tags$h4("State Political Stands"),
+                         choices = list("Republican" = 1, "Democratic" = 2), 
+                         selected = c(1,2)),
+      fluidRow(column(3, verbatimTextOutput("party")))      
+    )
   ),
+  
   dashboardBody(
     tabItems(
       #img(src='Image.png',style="width: 50px")
       tabItem(tabName = "overview", 
-              tags$img(src="coronavirus.jpg", height="100%", width="100%")),
+              #tags$img(src="coronavirus.jpg", height="50%", width="50%"),
+              fluidRow(column(6, plotOutput("case")),
+                       column(6, plotOutput("ratio"))),
+              fluidRow(column(6, ),
+                       column(6, h4("fatality ratio = death/tested"),
+                              h4("infected ratio = infected/tested"),
+                              h4("tested ratio = tested/population")))),
+      
       tabItem(tabName = "geology", plotOutput("temperature")), # add airport, urban
       tabItem(tabName = "politics", plotOutput("pps")), # add govner, senate, house
       tabItem(tabName = "economy", plotOutput("gdp")), # add gini, top industry, income, unemploye
@@ -40,6 +56,8 @@ dashboardPage(skin = "green",
   )
 )
 
+# problems encountered ####
+# histogram can only do x = log10(xxx), + coord_trans(x = "log10") doesn't work
 
 
 # shinyUI(dashboardPage(
