@@ -6,7 +6,8 @@ dashboardPage(skin = "green",
                   
   dashboardSidebar(
     #sidebarUserPanel(tags$h3("Sections")),
-    sidebarUserPanel(tags$img(src="https://cdn.pixabay.com/photo/2020/03/31/02/20/virus-4986015_960_720.png", width = "50%", height = "100%")),
+    sidebarUserPanel(tags$img(src="https://cdn.pixabay.com/photo/2020/03/31/02/20/virus-4986015_960_720.png", 
+                              width = "50%", height = "100%")),
     #sidebarSearchForm(textId = "searchText", buttonId = "searchButton",
     #                  label = "Search..."),
     sidebarMenu(
@@ -25,12 +26,14 @@ dashboardPage(skin = "green",
       menuItem("About Me", tabName = "aboutme", icon = icon("smile-wink")),
       
       # polical stand ####
-      # checkboxGroupInput("party", label = tags$h4("State Political Stands"),
-      #                    choices = list("Republican" = 1, "Democratic" = 2), 
-      #                    selected = c(1)),
-      checkboxInput("republican", label = tags$h4("Republican"), value = TRUE),
-      #checkboxInput("democratic", label = tags$h4("Democratic"), value = TRUE),
-      fluidRow(column(3, verbatimTextOutput("republican")))
+      radioButtons("party", label = "State Political Stands", 
+                   choices = list("Republican" = "A", "Democratic" = "B", "Both" = "C"),
+                   selected = "C"),
+      fluidRow(column(3, verbatimTextOutput("party"))),
+      # primary industry sector
+      radioButtons("sector", label = "State Primary Industry Sector",
+                   choices = list("Primary & Secondary" = "D", "Tertiary" = "E", "All" = "F"),
+                   selected = "F")
       
       # 
     )
@@ -54,8 +57,10 @@ dashboardPage(skin = "green",
       tabItem(tabName = "people", plotOutput("pop.density")), # add old people, sex
       tabItem(tabName = "medical", plotOutput("hospitals")), # add pysician, icu bed, pollution, flu, smoking, health spending
       tabItem(tabName = "aboutme", 
-              tags$img(src="LY.jpg",height="100%", width="100%"), tags$h4("Lu Yu"),
-              plotOutput("test"))
+              tags$img(src="LY.jpg", height="50%", width="50%", align = "center"), 
+              tags$h4("Lu Yu.", align = "left"),
+              tags$h5("soslucysos@gmail.com"),
+              #plotOutput("test"))
       )
   )
 )
@@ -63,6 +68,13 @@ dashboardPage(skin = "green",
 # problems encountered ####
 # histogram can only do x = log10(xxx), + coord_trans(x = "log10") doesn't work
 
+# historical versions ####
+# checkboxGroupInput("party", label = tags$h4("State Political Stands"),
+#                    choices = list("Republican" = 1, "Democratic" = 2), 
+#                    selected = c(1)),
+#checkboxInput("republican", label = tags$h4("Republican"), value = TRUE),
+#checkboxInput("democratic", label = tags$h4("Democratic"), value = TRUE),
+#fluidRow(column(3, verbatimTextOutput("republican"))),
 
 # shinyUI(dashboardPage(
 #   dashboardHeader(title = "My Dashboard"),

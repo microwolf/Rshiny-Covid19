@@ -1,4 +1,4 @@
-State,industry.category,Industry,GDP.billion,GDP.percentage,workforce,workforce.rate,5yr.industry.GDP.change,ave.salary
+State,primary.industry.category,Industry,GDP.billion,GDP.percentage,workforce,workforce.rate,5yr.industry.GDP.change,ave.salary
 Alabama,healthcare,Ambulatory health care services,8.3,0.046,,,,
 Alaska,energy,Oil and gas extraction,7.4,0.159,,,,
 Arizona,healthcare,Ambulatory health care services,12.9,0.048,,,,

@@ -41,20 +41,25 @@ boil_date = function(df){
 }
 
 ## case import & wrangle ####
+# state abbreviation
 abbr = read_csv("state-abbr.csv")
 colnames(abbr) = clean_colname(abbr)
-colnames(abbr)[2] = "abbr"
-
+colnames(abbr) = c("state", "abbr")
+# state covid-19 cases
 us = read_csv("us-covid19-20200419.csv")
 colnames(us) = clean_colname(us)
-# abbreviate us states
-us = right_join(abbr, us, by = c("us.state" = "state"))
-
+us = right_join(abbr, us, by ="state")
+# state politcal stands
 pps = read_csv("state-party-mod.csv")
 colnames(pps) = clean_colname(pps)
 colnames(pps)[2] = "pres.elec.2016"
-# abbreviate pps stats
-pps = right_join(abbr, pps, by = c( "us.state" = "state"))
+pps = right_join(abbr, pps, by = "state")
+# state primary industry
+ind.raw = read_csv("state-industry.csv")
+colnames(ind.raw) = clean_colname(ind.raw)
+ind = right_join(abbr, ind.raw, by = "state") %>% select(abbr, primary.industry.category)
+ind = ind %>% mutate(primary.industry.sector = ifelse(primary.industry.category %in% c("energy", "farming", "chemistry"), "Primary & Secondary", "Tertiary"))
+us = right_join(ind, us, by = "abbr")
 
 # case ratios ####
 # calculate ratios for covid19 cases
@@ -69,8 +74,8 @@ us = us %>% filter(abbr != "DC")
 
 # party strength ####
 # add political party strength by state
-pps = pps %>% select(us.state, abbr, `pres.elec.2016`)
-us = right_join(pps, us, by = c("us.state", "abbr"))
+pps = pps %>% select(state, abbr, `pres.elec.2016`)
+us = right_join(pps, us, by = c("state", "abbr"))
 
 
 ## state time series ####
@@ -86,21 +91,20 @@ us.ts = do.call(args = ts.df, what = rbind)
 # choose a date and create a date-specific us table
 theDay = "2020-04-17"
 theDay = as.Date(theDay)
-us.ts %>% filter(date == theDay)
+#us.ts %>% filter(date == theDay)
 
-getDay = function(day){
-  
-}
 ## TO DO ####
-# add interactive: select group, date range bar
+# add interactive:  date range bar
 # plots: vs economic status, vs policatical stand
-# plots: map
+# add emergency declare date
+
 # add gdp per captia
 # collect temperature
 # categorize state by spring ave temp
 
 ## extras ####
 # connect API so get most updated data
+# plots: map
 # collect data: num of univ
 
 ## Done ####
@@ -111,6 +115,7 @@ getDay = function(day){
 # allow only certain dates
 # add interactive: select date
 # add data: top industry, time zone
+# add interactive: select group for political stands
 
 ## pilot runs ####
 #test = ny[1,1] %>% as.character() %>% as.numeric()

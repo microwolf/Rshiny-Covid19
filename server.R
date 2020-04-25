@@ -10,18 +10,22 @@ shinyServer(function(input, output) {
   ## dynamic data based on inpu ####
   # adjust data based on date selected by user
   usToday = reactive({
-    us.ts.today = us.ts %>% filter(date == input$date)
-    us.today.number = left_join(us.constant, us.ts.today, by = c("abbr"))
+    # set politcal stands filter
+    ps = switch (input$party, "A" = "Republican", 
+                 "B" = "Democratic", 
+                 "C" = c("Republican","Democratic"))
+    sc = switch(input$sector, "D" = "Primary & Secondary", 
+                 "E" = "Tertiary", 
+                 "F" = c("Primary & Secondary", "Tertiary"))
     
-    if (input$republican) {
-      ps = "Republican"
-    } else {ps = "Democratic"}
-    
+    us.ts.today = us.ts %>% filter(date == input$date) # filter by date
+    us.today.number = left_join(us.constant, us.ts.today, by = c("abbr")) # combine with contant part of table
+    # calculate ration & filter by user selection
     us.today = us.today.number %>% 
       mutate(rate.tested = tested / population,
              rate.positive = infected / tested,
              rate.fatality = deaths / infected) %>% 
-      filter(pres.elec.2016 == ps)
+      filter(pres.elec.2016 == ps & primary.industry.sector == sc)
     return(us.today)
   })
   
@@ -36,19 +40,21 @@ shinyServer(function(input, output) {
     target = usTodayNR()
     ggplot(data = target, aes(x=log10(number))) +
       geom_histogram(aes(fill = number.content), position = "dodge", bins = 10) +
+      #geom_density(aes(fill = number.content, color = number.content), alpha = 0.5) +
       labs(title = "Counts of Covid-19 Cases", x = "Log Number of People", y = "Count") #+
       #coord_trans(x = "log10")
   })
   output$ratio = renderPlot({
     target = usTodayNR()
     ggplot(data = target, aes(x = ratio)) +
-      geom_histogram(aes(fill = ratio.content), position = "dodge") +
+      geom_histogram(aes(fill = ratio.content), position = "dodge", bins = 10) +
+      #geom_density(aes(fill = ratio.content, color = number.content), alpha = 0.5) +
       labs(title = "Ratios of Covid-19 Cases", x = "Ratio", y = "Count")
   })
   
   # geology ####
   output$temperature = renderPlot({
-    target = usToday()
+    target = usTodayNR()
     ggplot(data = target, aes( y = rate.fatality, x = temperature)) +
       geom_point()
   })
@@ -117,3 +123,6 @@ test.ts.today = us.ts %>% filter(date == test.day)
  #    us.case.today = gather(us.ts.today, number.content, number, 4:6) 
  #    return(us.case.today)
  #  })
+# if (input$republican) {
+#   ps = "Republican"
+# } else {ps = "Democratic"}
