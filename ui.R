@@ -59,15 +59,10 @@ dashboardPage(skin = "green",
       tabItem(tabName = "politics", plotOutput("pps")), # add govner, senate, house
       # tab: economy --------------------
       tabItem(tabName = "economy", 
-              fluidRow(column(6, plotOutput("gdp")),
-                       column(6, plotOutput("gini"))),
-
               fluidRow(column(6, plotOutput("gdp.filter")),
                        column(6, plotOutput("gini.filter"))),
-              
-              fluidRow(column(6, plotOutput("unemployment")),
-                       column(6, plotOutput("income")))
-
+              fluidRow(column(6, plotOutput("unemp.filter")),
+                       column(6, plotOutput("income.filter")))
               #fluidRow(tableOutput("gdp.table"))
               ), # add gini, top industry, income, unemploye
       # tab: people --------------------

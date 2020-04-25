@@ -76,45 +76,33 @@ shinyServer(function(input, output) {
   })
   
   # economy ####
-  
-  output$gdp = renderPlot({
-    target = usTodayAll()
+
+  output$gdp.filter = renderPlot({
+    target = usTodayFilter()
     ggplot(data = target, aes(y = rate.fatality, x = gdp)) +
       geom_point(aes(shape = pres.elec.2016, 
-                     color = primary.industry.sector), 
-                 size = 3) +
-      theme(legend.position= "bottom")
-  })
-  output$gini = renderPlot({
-    target = usTodayAll()
-    ggplot(data = target, aes(y = rate.fatality, x = gini)) +
-      geom_point(aes(shape = pres.elec.2016,
                      color = primary.industry.sector),
                  size = 3) +
-      theme(legend.position="bottom")
-  })
-  output$gdp.filter = renderPlot({
-    target = usTodayGatherFilter()
-    ggplot(data = target, aes(y = ratio, x = gdp)) +
-      geom_point(aes(fill = ratio.content)) +
       theme(legend.position = "bottom")
   })
   output$gini.filter = renderPlot({
-    target = usTodayGatherFilter()
-    ggplot(data = target, aes(y = ratio, x = gini)) +
-      geom_point(aes(fill = ratio.content)) +
+    target = usTodayFilter()
+    ggplot(data = target, aes(y = rate.fatality, x = gini)) +
+      geom_point(aes(shape = pres.elec.2016, 
+                     color = primary.industry.sector),
+                 size = 3) +
       theme(legend.position = "bottom")
   })
-  output$unemployment = renderPlot({
-    target = usTodayAll()
+  output$unemp.filter = renderPlot({
+    target = usTodayFilter()
     ggplot(data = target, aes(y = rate.fatality, x = unemployment)) +
       geom_point(aes(shape = pres.elec.2016,
                      color = primary.industry.sector),
                  size = 3) +
       theme(legend.position = "bottom")
   })
-  output$income = renderPlot({
-    target = usTodayAll()
+  output$income.filter = renderPlot({
+    target = usTodayFilter()
     ggplot(data = target, aes(y = rate.fatality, x = income)) +
       geom_point(aes(shape = pres.elec.2016,
                      color = primary.industry.sector),
@@ -173,7 +161,7 @@ ggplot(data = test.today.gather, aes(x=number)) +
   theme(legend.position="bottom") #+
   #coord_trans(x = "log10")
 
-# unused code ####
+# historical code ####
 #output$theDay = renderPrint({input$date})
 
   # usTodayAll = reactive({
@@ -195,4 +183,21 @@ ggplot(data = test.today.gather, aes(x=number)) +
 # print out table
 # output$gdp.table = renderTable({
 #   target = usTodayGatherFilter()
+# })
+
+# output$gdp = renderPlot({
+#   target = usTodayAll()
+#   ggplot(data = target, aes(y = rate.fatality, x = gdp)) +
+#     geom_point(aes(shape = pres.elec.2016, 
+#                    color = primary.industry.sector), 
+#                size = 3) +
+#     theme(legend.position= "bottom")
+# })
+# output$gini = renderPlot({
+#   target = usTodayAll()
+#   ggplot(data = target, aes(y = rate.fatality, x = gini)) +
+#     geom_point(aes(shape = pres.elec.2016,
+#                    color = primary.industry.sector),
+#                size = 3) +
+#     theme(legend.position="bottom")
 # })
