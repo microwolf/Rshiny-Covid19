@@ -71,7 +71,6 @@ us = right_join(ind, us, by = "abbr")
 # exclude DC ####
 us = us %>% filter(abbr != "DC")
 
-
 # party strength ####
 # add political party strength by state
 pps = pps %>% select(state, abbr, `pres.elec.2016`)
