@@ -5,11 +5,10 @@ library(shinydashboard)
 
 shinyServer(function(input, output) {
   
-  us.constant = us %>% select(-tested, -infected, -deaths)
-  
   ## dynamic data based on inpu ####
   # adjust data based on date selected by user
   usTodayAll = reactive({
+    us.constant = us %>% select(-tested, -infected, -deaths)
     us.ts.today = us.ts %>% filter(date == input$date) # filter by date
     us.today.number = left_join(us.constant, us.ts.today, by = c("abbr")) # combine with contant part of table
     # calculate ration & filter by user selection
@@ -19,15 +18,6 @@ shinyServer(function(input, output) {
              rate.fatality = deaths / infected) 
     return(us.today.all)
   }) 
-  ps = switch ("B", 
-               "A" = "Republican", 
-               "B" = "Democratic", 
-               "C" = c("Republican","Democratic"))
-  sc = switch("D", 
-              "D" = "Primary & Secondary", 
-              "E" = "Tertiary", 
-              "F" = c("Primary & Secondary", "Tertiary"))
-  
   usTodayFilter = reactive({
     # set politcal stands filter
     ps = switch (input$party, 
@@ -44,14 +34,12 @@ shinyServer(function(input, output) {
       filter(primary.industry.sector %in% sc)
     return(us.today.filter)
   })
-  
   usTodayGatherAll = reactive({
     us.today.gather.all = usTodayAll() %>% 
       gather(number.content, number, tested, infected, deaths) %>% 
       gather(ratio.content, ratio, rate.tested, rate.positive, rate.fatality)
     return(us.today.gather.all)
-  }) # 
-  
+  }) 
   usTodayGatherFilter = reactive({
     us.today.gather.filter = usTodayFilter() %>% 
       gather(number.content, number, tested, infected, deaths) %>% 
@@ -117,11 +105,6 @@ shinyServer(function(input, output) {
       geom_point(aes(fill = ratio.content)) +
       theme(legend.position = "bottom")
   })
-  output$gdp.table = renderTable({
-    target = usTodayGatherFilter()
-  })
-
-  
   # output$unemployment = renderPlot({
   #   target = usTodayAll()
   #   ggplot(data = target, aes(y = rate.fatality, x = unemployment)) +
@@ -208,3 +191,8 @@ ggplot(data = test.today.gather, aes(x=number)) +
 # if (input$republican) {
 #   ps = "Republican"
 # } else {ps = "Democratic"}
+
+# print out table
+# output$gdp.table = renderTable({
+#   target = usTodayGatherFilter()
+# })
