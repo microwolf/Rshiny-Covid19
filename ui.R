@@ -63,8 +63,9 @@ dashboardPage(skin = "green",
                        column(6, plotOutput("gini"))),
               fluidRow(column(6, plotOutput("gdp.filter")),
                        column(6, plotOutput("gini.filter"))),
-              fluidRow(column(6, plotOutput("unemployment")),
-                       column(6, plotOutput("income")))
+              #fluidRow(column(6, plotOutput("unemployment")),
+              #         column(6, plotOutput("income")))
+              fluidRow(tableOutput("gdp.table"))
               ), # add gini, top industry, income, unemploye
       # tab: people --------------------
       tabItem(tabName = "people", plotOutput("pop.density")), # add old people, sex

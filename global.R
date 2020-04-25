@@ -96,6 +96,7 @@ theDay = as.Date(theDay)
 # add interactive:  date range bar
 # plots: vs economic status, vs policatical stand
 # add emergency declare date
+# hover points to show data
 
 # add gdp per captia
 # collect temperature

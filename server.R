@@ -19,18 +19,29 @@ shinyServer(function(input, output) {
              rate.fatality = deaths / infected) 
     return(us.today.all)
   }) 
+  ps = switch ("B", 
+               "A" = "Republican", 
+               "B" = "Democratic", 
+               "C" = c("Republican","Democratic"))
+  sc = switch("D", 
+              "D" = "Primary & Secondary", 
+              "E" = "Tertiary", 
+              "F" = c("Primary & Secondary", "Tertiary"))
   
   usTodayFilter = reactive({
     # set politcal stands filter
-    ps = switch (input$party, "A" = "Republican", 
+    ps = switch (input$party, 
+                 "A" = "Republican", 
                  "B" = "Democratic", 
                  "C" = c("Republican","Democratic"))
-    sc = switch(input$sector, "D" = "Primary & Secondary", 
+    sc = switch(input$sector, 
+                "D" = "Primary & Secondary", 
                 "E" = "Tertiary", 
                 "F" = c("Primary & Secondary", "Tertiary"))
     # adjust data based on political stand & industry sector selected by user
     us.today.filter = usTodayAll() %>% 
-      filter(pres.elec.2016 == ps, primary.industry.sector == sc)
+      filter(pres.elec.2016 %in% ps) %>%  
+      filter(primary.industry.sector %in% sc)
     return(us.today.filter)
   })
   
@@ -55,9 +66,8 @@ shinyServer(function(input, output) {
       geom_histogram(aes(fill = number.content), position = "dodge", bins = 10) +
       #geom_density(aes(fill = number.content, color = number.content), alpha = 0.5) +
       labs(title = "Counts of Covid-19 Cases", x = "Log of Number of People", y = "Count") +
-      facet_grid(~number.content)+
-      theme(legend.position="bottom") #+
-      #coord_trans(x = "log10")
+      theme(legend.position="bottom") +
+      facet_grid(~number.content)
   })
   output$ratio = renderPlot({
     target = usTodayGatherFilter()
@@ -66,10 +76,9 @@ shinyServer(function(input, output) {
       facet_grid(~ratio.content) +
       #geom_density(aes(fill = ratio.content, color = number.content), alpha = 0.5) +
       labs(title = "Ratios of Covid-19 Cases", x = "Ratio", y = "Count") +
-      facet_grid(~ratio.content) +
-      theme(legend.position="bottom")
+      theme(legend.position="bottom") + 
+      facet_grid(~ratio.content)
   })
-
   
   # geology ####
   output$temperature = renderPlot({
@@ -86,7 +95,7 @@ shinyServer(function(input, output) {
       geom_point(aes(shape = pres.elec.2016, 
                      color = primary.industry.sector), 
                  size = 3) +
-      theme(legend.position="bottom")
+      theme(legend.position= "bottom")
   })
   output$gini = renderPlot({
     target = usTodayAll()
@@ -96,23 +105,39 @@ shinyServer(function(input, output) {
                  size = 3) +
       theme(legend.position="bottom")
   })
+  output$gdp.filter = renderPlot({
+    target = usTodayGatherFilter()
+    ggplot(data = target, aes(y = ratio, x = gdp)) +
+      geom_point(aes(fill = ratio.content)) +
+      theme(legend.position = "bottom")
+  })
+  output$gini.filter = renderPlot({
+    target = usTodayGatherFilter()
+    ggplot(data = target, aes(y = ratio, x = gini)) +
+      geom_point(aes(fill = ratio.content)) +
+      theme(legend.position = "bottom")
+  })
+  output$gdp.table = renderTable({
+    target = usTodayGatherFilter()
+  })
 
-  output$unemployment = renderPlot({
-    target = usTodayAll()
-    ggplot(data = target, aes(y = rate.fatality, x = unemployment)) +
-      geom_point(aes(shape = pres.elec.2016,
-                     color = primary.industry.sector),
-                 size = 3) +
-      theme(legend.position = "bottom")
-  })
-  output$income = renderPlot({
-    target = usTodayAll()
-    ggplot(data = target, aes(y = rate.fatality, x = income)) +
-      geom_point(aes(shape = pres.elec.2016,
-                     color = primary.industry.sector),
-                 size = 3) +
-      theme(legend.position = "bottom")
-  })
+  
+  # output$unemployment = renderPlot({
+  #   target = usTodayAll()
+  #   ggplot(data = target, aes(y = rate.fatality, x = unemployment)) +
+  #     geom_point(aes(shape = pres.elec.2016,
+  #                    color = primary.industry.sector),
+  #                size = 3) +
+  #     theme(legend.position = "bottom")
+  # })
+  # output$income = renderPlot({
+  #   target = usTodayAll()
+  #   ggplot(data = target, aes(y = rate.fatality, x = income)) +
+  #     geom_point(aes(shape = pres.elec.2016,
+  #                    color = primary.industry.sector),
+  #                size = 3) +
+  #     theme(legend.position = "bottom")
+  # })
   
   # politics ####
   output$pps = renderPlot({
