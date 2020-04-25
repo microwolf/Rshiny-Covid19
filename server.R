@@ -83,7 +83,8 @@ shinyServer(function(input, output) {
       geom_point(aes(shape = pres.elec.2016, 
                      color = primary.industry.sector),
                  size = 3) +
-      theme(legend.position = "bottom")
+      labs(title = "GDP", x = "GDP", y = "Fatality Ratio", shape = "Political Stands", color = "Primary Industry Sector") +
+      theme(legend.position = "bottom", plot.title = element_text(hjust = 0.5))
   })
   output$gini.filter = renderPlot({
     target = usTodayFilter()
@@ -91,7 +92,8 @@ shinyServer(function(input, output) {
       geom_point(aes(shape = pres.elec.2016, 
                      color = primary.industry.sector),
                  size = 3) +
-      theme(legend.position = "bottom")
+      labs(title = "Gini Index", x = "Gini Index", y = "Fatality Ratio", shape = "Political Stands", color = "Primary Industry Sector") +
+      theme(legend.position = "bottom", plot.title = element_text(hjust = 0.5))
   })
   output$unemp.filter = renderPlot({
     target = usTodayFilter()
@@ -99,7 +101,8 @@ shinyServer(function(input, output) {
       geom_point(aes(shape = pres.elec.2016,
                      color = primary.industry.sector),
                  size = 3) +
-      theme(legend.position = "bottom")
+      labs(title = "Unemployment Ratio", x = "Unemployment Ratio", y = "Fatality Ratio", shape = "Political Stands", color = "Primary Industry Sector") +
+      theme(legend.position = "bottom", plot.title = element_text(hjust = 0.5))
   })
   output$income.filter = renderPlot({
     target = usTodayFilter()
@@ -107,7 +110,8 @@ shinyServer(function(input, output) {
       geom_point(aes(shape = pres.elec.2016,
                      color = primary.industry.sector),
                  size = 3) +
-      theme(legend.position = "bottom")
+      labs(title = "Average Income", x = "Average Income", y = "Fatality Ratio", shape = "Political Stands", color = "Primary Industry Sector") +
+      theme(legend.position = "bottom", plot.title = element_text(hjust = 0.5))
   })
   
   # politics ####
