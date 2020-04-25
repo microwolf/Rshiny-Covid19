@@ -4,7 +4,7 @@ library(shinydashboard)
 #g = ggplot(data = us)
 
 shinyServer(function(input, output) {
-  
+
   ## dynamic data based on inpu ####
   # adjust data based on date selected by user
   usTodayAll = reactive({
@@ -105,22 +105,22 @@ shinyServer(function(input, output) {
       geom_point(aes(fill = ratio.content)) +
       theme(legend.position = "bottom")
   })
-  # output$unemployment = renderPlot({
-  #   target = usTodayAll()
-  #   ggplot(data = target, aes(y = rate.fatality, x = unemployment)) +
-  #     geom_point(aes(shape = pres.elec.2016,
-  #                    color = primary.industry.sector),
-  #                size = 3) +
-  #     theme(legend.position = "bottom")
-  # })
-  # output$income = renderPlot({
-  #   target = usTodayAll()
-  #   ggplot(data = target, aes(y = rate.fatality, x = income)) +
-  #     geom_point(aes(shape = pres.elec.2016,
-  #                    color = primary.industry.sector),
-  #                size = 3) +
-  #     theme(legend.position = "bottom")
-  # })
+  output$unemployment = renderPlot({
+    target = usTodayAll()
+    ggplot(data = target, aes(y = rate.fatality, x = unemployment)) +
+      geom_point(aes(shape = pres.elec.2016,
+                     color = primary.industry.sector),
+                 size = 3) +
+      theme(legend.position = "bottom")
+  })
+  output$income = renderPlot({
+    target = usTodayAll()
+    ggplot(data = target, aes(y = rate.fatality, x = income)) +
+      geom_point(aes(shape = pres.elec.2016,
+                     color = primary.industry.sector),
+                 size = 3) +
+      theme(legend.position = "bottom")
+  })
   
   # politics ####
   output$pps = renderPlot({

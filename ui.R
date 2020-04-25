@@ -61,10 +61,12 @@ dashboardPage(skin = "green",
       tabItem(tabName = "economy", 
               fluidRow(column(6, plotOutput("gdp")),
                        column(6, plotOutput("gini"))),
-              #fluidRow(column(6, plotOutput("unemployment")),
-              #         column(6, plotOutput("income"))),
+
               fluidRow(column(6, plotOutput("gdp.filter")),
-                       column(6, plotOutput("gini.filter")))
+                       column(6, plotOutput("gini.filter"))),
+              
+              fluidRow(column(6, plotOutput("unemployment")),
+                       column(6, plotOutput("income")))
 
               #fluidRow(tableOutput("gdp.table"))
               ), # add gini, top industry, income, unemploye
