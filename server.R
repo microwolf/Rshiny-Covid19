@@ -77,41 +77,50 @@ shinyServer(function(input, output) {
   
   # economy ####
 
-  output$gdp.filter = renderPlot({
+  output$gdp.filter = renderPlotly({
     target = usTodayFilter()
-    ggplot(data = target, aes(y = rate.fatality, x = gdp)) +
+    g = ggplot(data = target, aes(y = rate.fatality, x = gdp, label = abbr)) +
       geom_point(aes(shape = pres.elec.2016, 
                      color = primary.industry.sector),
                  size = 3) +
+      geom_smooth() +
       labs(title = "GDP", x = "GDP", y = "Fatality Ratio", shape = "Political Stands", color = "Primary Industry Sector") +
-      theme(legend.position = "bottom", plot.title = element_text(hjust = 0.5))
+      theme(plot.title = element_text(hjust = 0.5))
+    h = ggplotly(g) %>% 
+      layout(legend = list(size = 0.4, orientation="h", x = 0,y = -0.5, yanchor="bottom"))
   })
-  output$gini.filter = renderPlot({
+  output$gini.filter = renderPlotly({
     target = usTodayFilter()
-    ggplot(data = target, aes(y = rate.fatality, x = gini)) +
+    g = ggplot(data = target, aes(y = rate.fatality, x = gini, label = abbr)) +
       geom_point(aes(shape = pres.elec.2016, 
                      color = primary.industry.sector),
                  size = 3) +
       labs(title = "Gini Index", x = "Gini Index", y = "Fatality Ratio", shape = "Political Stands", color = "Primary Industry Sector") +
-      theme(legend.position = "bottom", plot.title = element_text(hjust = 0.5))
+      theme(plot.title = element_text(hjust = 0.5))
+    h = ggplotly(g) %>% 
+      layout(legend = list(size = 0.4, orientation="h", x = 0,y = -0.5, yanchor="bottom"))
   })
-  output$unemp.filter = renderPlot({
+  output$unemp.filter = renderPlotly({
     target = usTodayFilter()
-    ggplot(data = target, aes(y = rate.fatality, x = unemployment)) +
+    g = ggplot(data = target, aes(y = rate.fatality, x = unemployment)) +
       geom_point(aes(shape = pres.elec.2016,
                      color = primary.industry.sector),
                  size = 3) +
       labs(title = "Unemployment Ratio", x = "Unemployment Ratio", y = "Fatality Ratio", shape = "Political Stands", color = "Primary Industry Sector") +
-      theme(legend.position = "bottom", plot.title = element_text(hjust = 0.5))
+      theme(plot.title = element_text(hjust = 0.5))
+    h = ggplotly(g) %>% 
+      layout(legend = list(size = 0.4, orientation="h", x = 0,y = -0.5, yanchor="bottom"))
   })
-  output$income.filter = renderPlot({
+  output$income.filter = renderPlotly({
     target = usTodayFilter()
-    ggplot(data = target, aes(y = rate.fatality, x = income)) +
+    g = ggplot(data = target, aes(y = rate.fatality, x = income)) +
       geom_point(aes(shape = pres.elec.2016,
                      color = primary.industry.sector),
                  size = 3) +
       labs(title = "Average Income", x = "Average Income", y = "Fatality Ratio", shape = "Political Stands", color = "Primary Industry Sector") +
-      theme(legend.position = "bottom", plot.title = element_text(hjust = 0.5))
+      theme(plot.title = element_text(hjust = 0.5))
+    h = ggplotly(g) %>% 
+      layout(legend = list(size = 0.4, orientation="h", x = 0,y = -0.5, yanchor="bottom"))
   })
   
   # politics ####
