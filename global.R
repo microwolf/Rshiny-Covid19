@@ -1,12 +1,15 @@
 ## setup ####
-setwd("~/Dropbox/nycdsa/projects/proj1_covid19/Rshiny-Covid19")
+#setwd("~/Dropbox/nycdsa/projects/proj1_covid19/Rshiny-Covid19")
 #library(shiny);library(shinydashboard)
-library(tidyverse);library(plotly)
+library(tidyverse);library(plotly);library(googleVis)
+
+
+#path = "~/Dropbox/nycdsa/projects/proj1_covid19/Rshiny-Covid19/"
 
 ## wrangle functions ####
 read_name = function(txt){
   # read csv file and create a new column indicate which state
-  file.name = paste0("/Users/luyu/Dropbox/nycdsa/projects/proj1_covid19/Rshiny-Covid19/timeSeries/", txt, ".txt")
+  file.name = paste0("timeSeries/", txt, ".txt")
   df = read_csv(file.name)
   df$abbr = txt
   return(df)
@@ -43,19 +46,23 @@ boil_date = function(df){
 
 ## case import & wrangle ####
 # state abbreviation
+#file.abbr = paste0(path, )
 abbr = read_csv("state-abbr.csv")
 colnames(abbr) = clean_colname(abbr)
 colnames(abbr) = c("state", "abbr")
 # state covid-19 cases
+#file.us = paste0(path, "us-covid19-20200419.csv")
 us = read_csv("us-covid19-20200419.csv")
 colnames(us) = clean_colname(us)
 us = right_join(abbr, us, by ="state")
 # state politcal stands
+#file.pps = paste0(path, "state-party-mod.csv")
 pps = read_csv("state-party-mod.csv")
 colnames(pps) = clean_colname(pps)
 colnames(pps)[2] = "pres.elec.2016"
 pps = right_join(abbr, pps, by = "state")
 # state primary industry
+#file.ind = paste0(path, "state-industry.csv")
 ind.raw = read_csv("state-industry.csv")
 colnames(ind.raw) = clean_colname(ind.raw)
 ind = right_join(abbr, ind.raw, by = "state") %>% select(abbr, primary.industry.category)
