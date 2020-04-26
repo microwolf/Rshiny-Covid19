@@ -50,22 +50,24 @@ shinyServer(function(input, output) {
   # overview ####
   output$case = renderPlot({
     target = usTodayGatherFilter()
-    ggplot(data = target, aes(x=log10(number))) +
+    g = ggplot(data = target, aes(x=log10(number))) +
       geom_histogram(aes(fill = number.content), position = "dodge", bins = 10) +
       #geom_density(aes(fill = number.content, color = number.content), alpha = 0.5) +
       labs(title = "Counts of Covid-19 Cases", x = "Log of Number of People", y = "Count") +
-      theme(legend.position="bottom") +
+      theme(plot.title = element_text(hjust = 0.5), legend.position="bottom") +
       facet_grid(~number.content)
+    g
   })
   output$ratio = renderPlot({
     target = usTodayGatherFilter()
-    ggplot(data = target, aes(x = ratio)) +
+    g = ggplot(data = target, aes(x = ratio)) +
       geom_histogram(aes(fill = ratio.content), position = "dodge", bins = 5) +
       facet_grid(~ratio.content) +
       #geom_density(aes(fill = ratio.content, color = number.content), alpha = 0.5) +
       labs(title = "Ratios of Covid-19 Cases", x = "Ratio", y = "Count") +
       theme(legend.position="bottom") + 
       facet_grid(~ratio.content)
+    g
   })
   
   # geology ####
@@ -76,14 +78,13 @@ shinyServer(function(input, output) {
   })
   
   # economy ####
-
   output$gdp.filter = renderPlotly({
     target = usTodayFilter()
     g = ggplot(data = target, aes(y = rate.fatality, x = gdp, label = abbr)) +
       geom_point(aes(shape = pres.elec.2016, 
                      color = primary.industry.sector),
                  size = 3) +
-      geom_smooth() +
+      geom_smooth(size=0.5, color = "grey", fill = "wheat", method = "lm") +
       labs(title = "GDP", x = "GDP", y = "Fatality Ratio", shape = "Political Stands", color = "Primary Industry Sector") +
       theme(plot.title = element_text(hjust = 0.5))
     h = ggplotly(g) %>% 
@@ -95,6 +96,7 @@ shinyServer(function(input, output) {
       geom_point(aes(shape = pres.elec.2016, 
                      color = primary.industry.sector),
                  size = 3) +
+      geom_smooth(size=0.5, color = "grey", fill = "wheat", method = "lm") +
       labs(title = "Gini Index", x = "Gini Index", y = "Fatality Ratio", shape = "Political Stands", color = "Primary Industry Sector") +
       theme(plot.title = element_text(hjust = 0.5))
     h = ggplotly(g) %>% 
@@ -106,6 +108,7 @@ shinyServer(function(input, output) {
       geom_point(aes(shape = pres.elec.2016,
                      color = primary.industry.sector),
                  size = 3) +
+      geom_smooth(size=0.5, color = "grey", fill = "wheat", method = "lm") +
       labs(title = "Unemployment Ratio", x = "Unemployment Ratio", y = "Fatality Ratio", shape = "Political Stands", color = "Primary Industry Sector") +
       theme(plot.title = element_text(hjust = 0.5))
     h = ggplotly(g) %>% 
@@ -117,6 +120,7 @@ shinyServer(function(input, output) {
       geom_point(aes(shape = pres.elec.2016,
                      color = primary.industry.sector),
                  size = 3) +
+      geom_smooth(size=0.5, color = "grey", fill = "wheat", method = "lm") +
       labs(title = "Average Income", x = "Average Income", y = "Fatality Ratio", shape = "Political Stands", color = "Primary Industry Sector") +
       theme(plot.title = element_text(hjust = 0.5))
     h = ggplotly(g) %>% 
