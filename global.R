@@ -14,6 +14,7 @@ read_name = function(txt){
 clean_colname = function(df) {
   # replace all empty space with period, all names to lower case
   colnames(df) = sapply(colnames(df), str_replace_all, " ", ".")
+  colnames(df) = sapply(colnames(df), str_replace_all, "-", "_")
   colnames(df) = sapply(colnames(df), tolower)
 }
 convert_epoch = function(time){
@@ -62,11 +63,9 @@ ind = ind %>% mutate(primary.industry.sector = ifelse(primary.industry.category 
 us = right_join(ind, us, by = "abbr")
 
 # case ratios ####
-# calculate ratios for covid19 cases
-#us = us %>% mutate( rate.tested = tested / population,
-#                    rate.positive = infected / tested, 
-#                    rate.fatality = deaths / infected)
-
+us = us %>% mutate( pop.hospitals = hospitals / population,
+                    pop.icu = icu.beds / population, 
+                    pop.physicians = physicians / population)
 
 # exclude DC ####
 us = us %>% filter(abbr != "DC")
@@ -93,10 +92,11 @@ theDay = as.Date(theDay)
 #us.ts %>% filter(date == theDay)
 
 ## TO DO ####
-# add interactive:  date range bar
-# plots: vs economic status, vs policatical stand
+# airpot plot: change to bar graph
 # add emergency declare date
-# hover points to show data
+# hospital per population
+# age 55+: + cannot be replaced by str_replace
+
 
 # add gdp per captia
 # collect temperature
@@ -106,6 +106,7 @@ theDay = as.Date(theDay)
 # connect API so get most updated data
 # plots: map
 # collect data: num of univ
+# add interactive:  date range bar
 
 ## Done ####
 # collect polictical stand
@@ -116,6 +117,8 @@ theDay = as.Date(theDay)
 # add interactive: select date
 # add data: top industry, time zone
 # add interactive: select group for political stands
+# plots: vs economic status, vs policatical stand
+# hover points to show data
 
 ## pilot runs ####
 #test = ny[1,1] %>% as.character() %>% as.numeric()
@@ -135,3 +138,9 @@ theDay = as.Date(theDay)
 
 #ts_names = paste0("/Users/luyu/Dropbox/nycdsa/projects/proj1_covid19/Rshiny-Covid19/timeSeries/", abbr$abbr, ".txt")
 #ts_states = lapply(ts_names, read_csv) # load state time series tables
+
+# calculate ratios for covid19 cases
+#us = us %>% mutate( rate.tested = tested / population,
+#                    rate.positive = infected / tested, 
+#                    rate.fatality = deaths / infected)
+

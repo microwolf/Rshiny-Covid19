@@ -54,21 +54,30 @@ dashboardPage(skin = "green",
               ),
   
       # tab: geology --------------------
-      tabItem(tabName = "geology", plotOutput("temperature")), # add airport, urban
-      # tab: politics --------------------
-      tabItem(tabName = "politics", plotOutput("pps")), # add govner, senate, house
+      tabItem(tabName = "geology", 
+              fluidRow(column(6, plotlyOutput("urban")),
+                       column(6, plotlyOutput("airport"))) 
+              ),
       # tab: economy --------------------
       tabItem(tabName = "economy", 
-              fluidRow(column(6, plotlyOutput("gdp.filter")),
-                       column(6, plotlyOutput("gini.filter"))),
-              fluidRow(column(6, plotlyOutput("unemp.filter")),
-                       column(6, plotlyOutput("income.filter")))
+              fluidRow(column(6, plotlyOutput("gdp")),
+                       column(6, plotlyOutput("gini"))),
+              fluidRow(column(6, plotlyOutput("unemp")),
+                       column(6, plotlyOutput("income")))
               #fluidRow(tableOutput("gdp.table"))
               ), # add gini, top industry, income, unemploye
       # tab: people --------------------
-      tabItem(tabName = "people", plotOutput("pop.density")), # add old people, sex
+      tabItem(tabName = "people", 
+              fluidRow(column(6, plotlyOutput("pop.density")),
+                       column(6, plotlyOutput("age55")))
+              ), # add old people, sex
       # tab: medical --------------------
-      tabItem(tabName = "medical", plotOutput("hospitals")), # add pysician, icu bed, pollution, flu, smoking, health spending
+      tabItem(tabName = "medical", 
+              fluidRow(column(6, plotlyOutput("hospital")),
+                       column(6, plotlyOutput("icu"))),
+              fluidRow(column(6, plotlyOutput("res.dis")),
+                       column(6, plotlyOutput("smoke")))
+              ), # add pysician, icu bed, pollution, flu, smoking, health spending
       # tab: aboutme --------------------
       tabItem(tabName = "aboutme", 
               HTML('<center><img src="LY.jpg" width="50%"></center>'),
@@ -93,6 +102,10 @@ dashboardPage(skin = "green",
 #fluidRow(column(3, verbatimTextOutput("republican"))),
 
 #img(src='Image.png',style="width: 50px")
+
+# tab: politics --------------------
+#tabItem(tabName = "politics", plotOutput("pps")), # add govner, senate, house
+
 
 #sidebarSearchForm(textId = "searchText", buttonId = "searchButton",
 #                  label = "Search..."),
