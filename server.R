@@ -55,6 +55,7 @@ shinyServer(function(input, output) {
       #geom_density(aes(fill = number.content, color = number.content), alpha = 0.5) +
       labs(title = "Counts of Covid-19 Cases", x = "Log of Number of People", y = "Count") +
       theme(plot.title = element_text(hjust = 0.5), legend.position="bottom") +
+      ylim(0, 65) +
       facet_grid(~number.content)
     g
   })
@@ -65,7 +66,8 @@ shinyServer(function(input, output) {
       facet_grid(~ratio.content) +
       #geom_density(aes(fill = ratio.content, color = number.content), alpha = 0.5) +
       labs(title = "Ratios of Covid-19 Cases", x = "Ratio", y = "Count") +
-      theme(legend.position="bottom") + 
+      theme(plot.title = element_text(hjust = 0.5), legend.position="bottom") + 
+      ylim(0, 150) +
       facet_grid(~ratio.content)
     g
   })
@@ -73,19 +75,20 @@ shinyServer(function(input, output) {
   # geology ####
   output$urban = renderPlotly({
     target = usTodayFilter()
-    g = ggplot(data = target, aes( y = rate.fatality, x = urban, label = abbr)) +
+    #r = cor(target$urban, target$rate.fatality, method = "pearson")
+    g = ggplot(data = target, aes( y = rate.fatality, x = urban, label = state)) +
       geom_point(aes(shape = pres.elec.2016, 
                      color = primary.industry.sector),
                  size = 3) +
       geom_smooth(size=0.5, color = "grey", fill = "wheat", method = "lm") +
-      labs(title = "Urban Percentage of Population", x = "Urbanization", y = "Mortality Rate", shape = "Political Stands", color = "Primary Industry Sector") +
+      labs(title = "Urban Percentage of Population ", x = "Urbanization", y = "Mortality Rate", shape = "Political Stands", color = "Primary Industry Sector") +
       theme(plot.title = element_text(hjust = 0.5))
     h = ggplotly(g) %>% 
       layout(legend = list(size = 0.4, orientation="h", x = 0,y = -0.5, yanchor="bottom"))
   })
   output$airport = renderPlotly({
     target = usTodayFilter()
-    g = ggplot(data = target, aes( y = rate.fatality, x = med_large.airports, label = abbr)) +
+    g = ggplot(data = target, aes( y = rate.fatality, x = med_large.airports, label = state)) +
       geom_boxplot(aes(fill = pres.elec.2016), alpha = 0.5) +
       labs(title = "Med-Large Airport Number", x = "airport number", y = "Mortality Rate", shape = "Political Stands", color = "Primary Industry Sector") +
       theme(plot.title = element_text(hjust = 0.5))
@@ -94,7 +97,7 @@ shinyServer(function(input, output) {
   })
   # output$airport = renderPlotly({
   #   target = usTodayFilter()
-  #   g = ggplot(data = target, aes( y = rate.fatality, x = med_large.airports, label = abbr)) +
+  #   g = ggplot(data = target, aes( y = rate.fatality, x = med_large.airports, label = state)) +
   #     geom_point(aes(shape = pres.elec.2016,
   #                    color = primary.industry.sector),
   #                size = 3) +
@@ -107,19 +110,19 @@ shinyServer(function(input, output) {
   # economy ####
   output$gdp = renderPlotly({
     target = usTodayFilter()
-    g = ggplot(data = target, aes(y = rate.fatality, x = gdp, label = abbr)) +
+    g = ggplot(data = target, aes(y = rate.fatality, x = gdp, label = state)) +
       geom_point(aes(shape = pres.elec.2016, 
                      color = primary.industry.sector),
                  size = 3) +
       geom_smooth(size=0.5, color = "grey", fill = "wheat", method = "lm") +
-      labs(title = "GDP", x = "GDP", y = "Mortality Rate", shape = "Political Stands", color = "Primary Industry Sector") +
+      labs(title = "GDP Per Capita", x = "GDP", y = "Mortality Rate", shape = "Political Stands", color = "Primary Industry Sector") +
       theme(plot.title = element_text(hjust = 0.5))
     h = ggplotly(g) %>% 
       layout(legend = list(size = 0.4, orientation="h", x = 0,y = -0.5, yanchor="bottom"))
   })
   output$gini = renderPlotly({
     target = usTodayFilter()
-    g = ggplot(data = target, aes(y = rate.fatality, x = gini, label = abbr)) +
+    g = ggplot(data = target, aes(y = rate.fatality, x = gini, label = state)) +
       geom_point(aes(shape = pres.elec.2016, 
                      color = primary.industry.sector),
                  size = 3) +
@@ -131,24 +134,24 @@ shinyServer(function(input, output) {
   })
   output$unemp = renderPlotly({
     target = usTodayFilter()
-    g = ggplot(data = target, aes(y = rate.fatality, x = unemployment, label = abbr)) +
+    g = ggplot(data = target, aes(y = rate.fatality, x = unemployment, label = state)) +
       geom_point(aes(shape = pres.elec.2016,
                      color = primary.industry.sector),
                  size = 3) +
       geom_smooth(size=0.5, color = "grey", fill = "wheat", method = "lm") +
-      labs(title = "Unemployment Ratio", x = "Unemployment Ratio", y = "Mortality Rate", shape = "Political Stands", color = "Primary Industry Sector") +
+      labs(title = "Unemployment Percentage to Workforce", x = "Unemployment Ratio", y = "Mortality Rate", shape = "Political Stands", color = "Primary Industry Sector") +
       theme(plot.title = element_text(hjust = 0.5))
     h = ggplotly(g) %>% 
       layout(legend = list(size = 0.4, orientation="h", x = 0,y = -0.5, yanchor="bottom"))
   })
   output$income = renderPlotly({
     target = usTodayFilter()
-    g = ggplot(data = target, aes(y = rate.fatality, x = income, label = abbr)) +
+    g = ggplot(data = target, aes(y = rate.fatality, x = income, label = state)) +
       geom_point(aes(shape = pres.elec.2016,
                      color = primary.industry.sector),
                  size = 3) +
       geom_smooth(size=0.5, color = "grey", fill = "wheat", method = "lm") +
-      labs(title = "Average Income", x = "Average Income", y = "Mortality Rate", shape = "Political Stands", color = "Primary Industry Sector") +
+      labs(title = "Income Per Capita $", x = "Income", y = "Mortality Rate", shape = "Political Stands", color = "Primary Industry Sector") +
       theme(plot.title = element_text(hjust = 0.5))
     h = ggplotly(g) %>% 
       layout(legend = list(size = 0.4, orientation="h", x = 0,y = -0.5, yanchor="bottom"))
@@ -156,7 +159,7 @@ shinyServer(function(input, output) {
   # people ####
   output$pop.density = renderPlotly({
     target = usTodayFilter()
-    g = ggplot(data = target, aes(y = rate.fatality, x = pop.density, label = abbr)) +
+    g = ggplot(data = target, aes(y = rate.fatality, x = pop.density, label = state)) +
       geom_point(aes(shape = pres.elec.2016,
                      color = primary.industry.sector),
                  size = 3) +
@@ -168,7 +171,7 @@ shinyServer(function(input, output) {
   })
   output$age55 = renderPlotly({
     target = usTodayFilter()
-    g = ggplot(data = target, aes(y = rate.fatality, x = age.55more, label = abbr)) +
+    g = ggplot(data = target, aes(y = rate.fatality, x = age.55more, label = state)) +
       geom_point(aes(shape = pres.elec.2016,
                      color = primary.industry.sector),
                  size = 3) +
@@ -182,31 +185,31 @@ shinyServer(function(input, output) {
   # healthcare ####
   output$hospital = renderPlotly({
     target = usTodayFilter()  
-    g = ggplot(data = target, aes(y = rate.fatality, x = pop.hospitals, label = abbr)) +
+    g = ggplot(data = target, aes(y = rate.fatality, x = pop.hospitals, label = state)) +
       geom_point(aes(shape = pres.elec.2016,
                      color = primary.industry.sector),
                  size = 3) +
       geom_smooth(size=0.5, color = "grey", fill = "wheat", method = "lm") +
-      labs(title = "Number of Hospitals", x = "Hospital Per Person", y = "Mortality Rate", shape = "Political Stands", color = "Primary Industry Sector") +
+      labs(title = "Number of Hospitals Per Person", x = "Hospital Per Person", y = "Mortality Rate", shape = "Political Stands", color = "Primary Industry Sector") +
       theme(plot.title = element_text(hjust = 0.5))
     h = ggplotly(g) %>% 
       layout(legend = list(size = 0.4, orientation="h", x = 0,y = -0.5, yanchor="bottom"))
     })
   output$icu = renderPlotly({
     target = usTodayFilter()  
-    g = ggplot(data = target, aes(y = rate.fatality, x = icu.beds, label = abbr)) +
+    g = ggplot(data = target, aes(y = rate.fatality, x = pop.icu, label = state)) +
       geom_point(aes(shape = pres.elec.2016,
                      color = primary.industry.sector),
                  size = 3) +
       geom_smooth(size=0.5, color = "grey", fill = "wheat", method = "lm") +
-      labs(title = "Number of ICU Beds", x = "ICU Beds Per Person", y = "Mortality Rate", shape = "Political Stands", color = "Primary Industry Sector") +
+      labs(title = "Number of ICU Beds Per Person", x = "ICU Beds Per Person", y = "Mortality Rate", shape = "Political Stands", color = "Primary Industry Sector") +
       theme(plot.title = element_text(hjust = 0.5))
     h = ggplotly(g) %>% 
       layout(legend = list(size = 0.4, orientation="h", x = 0,y = -0.5, yanchor="bottom"))
   })
   output$res.dis = renderPlotly({
     target = usTodayFilter()  
-    g = ggplot(data = target, aes(y = rate.fatality, x = respiratory.deaths, label = abbr)) +
+    g = ggplot(data = target, aes(y = rate.fatality, x = respiratory.deaths, label = state)) +
       geom_point(aes(shape = pres.elec.2016,
                      color = primary.industry.sector),
                  size = 3) +
@@ -218,7 +221,7 @@ shinyServer(function(input, output) {
   })
   output$smoke = renderPlotly({
     target = usTodayFilter()  
-    g = ggplot(data = target, aes(y = rate.fatality, x = smoking.rate, label = abbr)) +
+    g = ggplot(data = target, aes(y = rate.fatality, x = smoking.rate, label = state)) +
       geom_point(aes(shape = pres.elec.2016,
                      color = primary.industry.sector),
                  size = 3) +

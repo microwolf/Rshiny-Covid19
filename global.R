@@ -1,7 +1,7 @@
 ## setup ####
 #setwd("~/Dropbox/nycdsa/projects/proj1_covid19/Rshiny-Covid19")
 #library(shiny);library(shinydashboard)
-library(tidyverse);library(plotly);library(googleVis)
+library(tidyverse);library(plotly);library(googleVis);library(ggpubr)
 
 
 #path = "~/Dropbox/nycdsa/projects/proj1_covid19/Rshiny-Covid19/"
