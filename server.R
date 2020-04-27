@@ -110,7 +110,7 @@ shinyServer(function(input, output) {
     g = ggplot(data = target, aes( y = rate.fatality, x = urban, label = state)) +
       geom_point(aes(shape = pres.elec.2016, 
                      color = primary.industry.sector),
-                 size = 3) +
+                 size = 2) +
       geom_smooth(size=0.5, color = "grey", fill = "wheat", method = "lm") +
       labs(title = "Urbanization ", x = "Urban Percentage of Population", y = "Mortality Rate", shape = "Political Stands", color = "Primary Industry Sector") +
       theme(plot.title = element_text(hjust = 0.5))
@@ -134,7 +134,7 @@ shinyServer(function(input, output) {
     g = ggplot(data = target, aes(y = rate.fatality, x = gdp, label = state)) +
       geom_point(aes(shape = pres.elec.2016, 
                      color = primary.industry.sector),
-                 size = 3) +
+                 size = 2) +
       geom_smooth(size=0.5, color = "grey", fill = "wheat", method = "lm") +
       labs(title = "GDP Per Capita", x = "GDP ($)", y = "Mortality Rate", shape = "Political Stands", color = "Primary Industry Sector") +
       theme(plot.title = element_text(hjust = 0.5))
@@ -146,7 +146,7 @@ shinyServer(function(input, output) {
     g = ggplot(data = target, aes(y = rate.fatality, x = gini, label = state)) +
       geom_point(aes(shape = pres.elec.2016, 
                      color = primary.industry.sector),
-                 size = 3) +
+                 size = 2) +
       geom_smooth(size=0.5, color = "grey", fill = "wheat", method = "lm") +
       labs(title = "Gini Index", x = "Gini Index", y = "Mortality Rate", shape = "Political Stands", color = "Primary Industry Sector") +
       theme(plot.title = element_text(hjust = 0.5))
@@ -158,7 +158,7 @@ shinyServer(function(input, output) {
     g = ggplot(data = target, aes(y = rate.fatality, x = unemployment, label = state)) +
       geom_point(aes(shape = pres.elec.2016,
                      color = primary.industry.sector),
-                 size = 3) +
+                 size = 2) +
       geom_smooth(size=0.5, color = "grey", fill = "wheat", method = "lm") +
       labs(title = "Unemployment Percentage to Workforce", x = "Unemployment Ratio", y = "Mortality Rate", shape = "Political Stands", color = "Primary Industry Sector") +
       theme(plot.title = element_text(hjust = 0.5))
@@ -170,7 +170,7 @@ shinyServer(function(input, output) {
     g = ggplot(data = target, aes(y = rate.fatality, x = income, label = state)) +
       geom_point(aes(shape = pres.elec.2016,
                      color = primary.industry.sector),
-                 size = 3) +
+                 size = 2) +
       geom_smooth(size=0.5, color = "grey", fill = "wheat", method = "lm") +
       labs(title = "Income Per Capita", x = "Income ($)", y = "Mortality Rate", shape = "Political Stands", color = "Primary Industry Sector") +
       theme(plot.title = element_text(hjust = 0.5))
@@ -184,7 +184,7 @@ shinyServer(function(input, output) {
     g = ggplot(data = target, aes(y = rate.fatality, x = pop.density, label = state)) +
       geom_point(aes(shape = pres.elec.2016,
                      color = primary.industry.sector),
-                 size = 3) +
+                 size = 2) +
       geom_smooth(size=0.5, color = "grey", fill = "wheat", method = "lm") +
       labs(title = "Population Density", x = "Population Density (#/m2)", y = "Mortality Rate", shape = "Political Stands", color = "Primary Industry Sector") +
       theme(plot.title = element_text(hjust = 0.5))
@@ -196,7 +196,7 @@ shinyServer(function(input, output) {
     g = ggplot(data = target, aes(y = rate.fatality, x = age.55more, label = state)) +
       geom_point(aes(shape = pres.elec.2016,
                      color = primary.industry.sector),
-                 size = 3) +
+                 size = 2) +
       geom_smooth(size=0.5, color = "grey", fill = "wheat", method = "lm") +
       labs(title = "Percentage of People 55+ years old", x = "> 55 yr People Ratio", y = "Mortality Rate", shape = "Political Stands", color = "Primary Industry Sector") +
       theme(plot.title = element_text(hjust = 0.5))
@@ -210,7 +210,7 @@ shinyServer(function(input, output) {
     g = ggplot(data = target, aes(y = rate.fatality, x = pop.hospitals, label = state)) +
       geom_point(aes(shape = pres.elec.2016,
                      color = primary.industry.sector),
-                 size = 3) +
+                 size = 2) +
       geom_smooth(size=0.5, color = "grey", fill = "wheat", method = "lm") +
       labs(title = "Number of Hospitals Per Person", x = "Hospital Per Person", y = "Mortality Rate", shape = "Political Stands", color = "Primary Industry Sector") +
       theme(plot.title = element_text(hjust = 0.5))
@@ -222,7 +222,7 @@ shinyServer(function(input, output) {
     g = ggplot(data = target, aes(y = rate.fatality, x = pop.icu, label = state)) +
       geom_point(aes(shape = pres.elec.2016,
                      color = primary.industry.sector),
-                 size = 3) +
+                 size = 2) +
       geom_smooth(size=0.5, color = "grey", fill = "wheat", method = "lm") +
       labs(title = "Number of ICU Beds Per Person", x = "ICU Beds Per Person", y = "Mortality Rate", shape = "Political Stands", color = "Primary Industry Sector") +
       theme(plot.title = element_text(hjust = 0.5))
@@ -234,7 +234,7 @@ shinyServer(function(input, output) {
     g = ggplot(data = target, aes(y = rate.fatality, x = respiratory.deaths, label = state)) +
       geom_point(aes(shape = pres.elec.2016,
                      color = primary.industry.sector),
-                 size = 3) +
+                 size = 2) +
       geom_smooth(size=0.5, color = "grey", fill = "wheat", method = "lm") +
       labs(title = "Chronic Lower Respiratory Disease Death Rate", x = "Respiratory Disease Deaths per 100,000 people", y = "Mortality Rate", shape = "Political Stands", color = "Primary Industry Sector") +
       theme(plot.title = element_text(hjust = 0.5))
@@ -246,7 +246,7 @@ shinyServer(function(input, output) {
     g = ggplot(data = target, aes(y = rate.fatality, x = smoking.rate, label = state)) +
       geom_point(aes(shape = pres.elec.2016,
                      color = primary.industry.sector),
-                 size = 3) +
+                 size = 2) +
       geom_smooth(size=0.5, color = "grey", fill = "wheat", method = "lm") +
       labs(title = "Percentage of Smokers", x = "smoking rate", y = "Mortality Rate", shape = "Political Stands", color = "Primary Industry Sector") +
       theme(plot.title = element_text(hjust = 0.5))
