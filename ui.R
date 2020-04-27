@@ -10,7 +10,7 @@ dashboardPage(skin = "green",
     sidebarMenu(
       # input: date --------------------
       dateInput("date", label = tags$h4("Select Date"), 
-                value = "2020-04-19", min = "2020-03-08", max = "2020-04-22"),
+                value = "2020-04-19", min = "2020-03-08"),
       fluidRow(column(3, verbatimTextOutput("date"))),
       
       # menu tabs --------------------

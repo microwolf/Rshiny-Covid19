@@ -4,13 +4,14 @@
 library(tidyverse);library(plotly);library(googleVis);library(ggpubr)
 
 
-#path = "~/Dropbox/nycdsa/projects/proj1_covid19/Rshiny-Covid19/"
-
 ## wrangle functions ####
+api = "http://coronavirusapi.com/getTimeSeries/"
 read_name = function(txt){
   # read csv file and create a new column indicate which state
-  file.name = paste0("timeSeries/", txt, ".txt")
-  df = read_csv(file.name)
+  #file.name = paste0("timeSeries/", txt, ".txt")
+  file.url = paste0(api, txt)
+  #df = read_csv(file.name)
+  df = read_csv(url(file.url))
   df$abbr = txt
   return(df)
 }
@@ -83,8 +84,7 @@ pps = pps %>% select(state, abbr, `pres.elec.2016`)
 us = right_join(pps, us, by = c("state", "abbr"))
 
 
-## state time series ####
-
+# state time series ####
 # create a list of names of states
 ts.df.raw = lapply(abbr$abbr, read_name)
 names(ts.df.raw) = abbr$abbr
@@ -93,24 +93,20 @@ ts.df = lapply(ts.df.raw, boil_date)
 # combine to 1 big tibble
 us.ts = do.call(args = ts.df, what = rbind)
 
-# choose a date and create a date-specific us table
-theDay = "2020-04-17"
-theDay = as.Date(theDay)
+
+
+## local test ####
+#theDay = "2020-04-17"
+#theDay = as.Date(theDay)
 #us.ts %>% filter(date == theDay)
 
 ## TO DO ####
-# airpot plot: change to bar graph
 # add emergency declare date
 # hospital per population
 # age 55+: + cannot be replaced by str_replace
-
-
-# add gdp per captia
 # collect temperature
-# categorize state by spring ave temp
 
 ## extras ####
-# connect API so get most updated data
 # plots: map
 # collect data: num of univ
 # add interactive:  date range bar
@@ -126,28 +122,12 @@ theDay = as.Date(theDay)
 # add interactive: select group for political stands
 # plots: vs economic status, vs policatical stand
 # hover points to show data
+# airpot plot: change to bar graph
+# connect API so get most updated data
 
-## pilot runs ####
-#test = ny[1,1] %>% as.character() %>% as.numeric()
-#as.POSIXct(test,origin="1970-01-01",tz="GMT")
-#pilot = head(ny)
-#pilot %>% mutate(date = convert_time(seconds_since_epoch)) %>% mutate()
-#test %>% convert_time() %>% as.Date("%Y-%m-%d", tz = "GMT")
 
-## old codes ####
-#ny = read_csv("./timeSeries/NY.txt")
-
-#ny = ny %>% mutate(date.time = convert_epoch(seconds_since_epoch)) %>% 
-#  mutate(date = as.Date(date.time, "%Y-%m-%d", tz = "GMT"))
-# only keep 1 row of data per day, use the later time of that day
-#ny = ny %>% group_by(date) %>% arrange(date.time) %>% slice(n())
-#boil_date(ny)
-
+## historical codes ####
 #ts_names = paste0("/Users/luyu/Dropbox/nycdsa/projects/proj1_covid19/Rshiny-Covid19/timeSeries/", abbr$abbr, ".txt")
 #ts_states = lapply(ts_names, read_csv) # load state time series tables
-
-# calculate ratios for covid19 cases
-#us = us %>% mutate( rate.tested = tested / population,
-#                    rate.positive = infected / tested, 
-#                    rate.fatality = deaths / infected)
+#path = "~/Dropbox/nycdsa/projects/proj1_covid19/Rshiny-Covid19/"
 
