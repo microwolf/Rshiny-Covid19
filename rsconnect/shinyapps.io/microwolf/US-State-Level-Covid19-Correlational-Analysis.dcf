@@ -5,8 +5,8 @@ account: microwolf
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 2187191
-bundleId: 3067822
+bundleId: 3069660
 url: https://microwolf.shinyapps.io/US-State-Level-Covid19-Correlational-Analysis/
-when: 1587921786.5251
+when: 1587956936.73649
 asMultiple: FALSE
 asStatic: FALSE
