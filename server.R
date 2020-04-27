@@ -17,7 +17,7 @@ shinyServer(function(input, output) {
              rate.positive = infected / tested,
              rate.fatality = deaths / infected) 
     return(us.today.all)
-  }) 
+  })
   usTodayFilter = reactive({
     # set politcal stands filter
     ps = switch (input$party, 
@@ -356,5 +356,3 @@ shinyServer(function(input, output) {
 #                size = 3) +
 #     theme(legend.position="bottom")
 # })
-
-# politics

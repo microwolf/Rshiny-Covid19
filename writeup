@@ -1,0 +1,10 @@
+US State Level Comparison of Covid-19 Infection
+
+As a federal country, each state in America possess certain degree of freedom in governing and unique geological, economical, and social conditions. This visualization of Covid-19 infection within the US is aimed to facilitate comparison at a state level on factors that may or may not correlate with disease spread. 
+
+Impacting factors were divided into several aspects, such as geological, economical, medical, and population-structure related. From each perspective, metrics of each state and it correlation with Covid-19 mortality rate were visualized and elevated.
+
+The user could choose to view a certain date from 3/8/2020 up to 4/22/2020 (may extend to present date later). Then the user could choose to view data from states that are: Republican / Democratic / both, and whose primary industry were primary and secondary / tertiary / all. After choosing certain type of states, the user could view correlation between Covid-19 mortality rate and geological factors (urbanization, mid-large airport numbers), economic factors (GDP, Gini coefficient, income, unemployment), population factor (population density, ratio of people older than 55), and medical factors (hospitals, icu beds, smokers, low respiratory disease prevalence). And compare how such correlation differ when looking at all 50 states, or states of certain category. 
+
+For example, in the medical section, it seems like the number of hospitals, icu beds has a weak negative correlation with mortality rate, confirming the importance of sufficient medical support. However, the correlation is weaker in Democratic states compared to Republican states, which could be an indication that the medical system has not been penetrated in Democratic states. The significance of the correlation and other possible explanations remain to be examined. 
+

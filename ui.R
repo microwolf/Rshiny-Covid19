@@ -5,21 +5,19 @@ dashboardPage(skin = "green",
   dashboardHeader(title = tags$h2("Covid-19")), 
   # side bar ==============================          
   dashboardSidebar(
-   
     sidebarUserPanel(tags$img(src="https://cdn.pixabay.com/photo/2020/03/31/02/20/virus-4986015_960_720.png", 
                               width = "50%", height = "100%")),
-    
     sidebarMenu(
       # input: date --------------------
       dateInput("date", label = tags$h4("Select Date"), 
-                value = "2020-04-19", min = "2020-03-08"),
+                value = "2020-04-19", min = "2020-03-08", max = "2020-04-22"),
       fluidRow(column(3, verbatimTextOutput("date"))),
       
       # menu tabs --------------------
       menuItem("Overview", tabName = "overview", icon = icon("map-signs")), 
       menuItem("Geology", tabName = "geology", icon = icon("globe-americas")),
       menuItem("Economy", tabName = "economy", icon = icon("dollar-sign")),
-      menuItem("People", tabName = "people", icon = icon("users")),
+      menuItem("Population", tabName = "population", icon = icon("users")),
       menuItem("Medical", tabName = "medical", icon = icon("hospital-symbol")),
       menuItem("About Me", tabName = "aboutme", icon = icon("smile-wink")),
       
@@ -88,12 +86,12 @@ dashboardPage(skin = "green",
               HTML('<center><img src="LY.jpg" width="50%"></center>'),
               #tags$img(src="LY.jpg", height="50%", width="50%", align = "center"), 
               tags$h4(tags$b("Lu Yu"), align = "center"),
+              tags$h5(tags$a(href = "https://www.linkedin.com/in/lu-yu-6ab86238/", "Linkedin"), align = "center"),
               tags$h5(tags$em("soslucysos@gmail.com"), align = "center")
-              #plotOutput("test"))
+              )
       )
+    )
   )
-)
-)
 
 # problems encountered ####
 # histogram can only do x = log10(xxx), + coord_trans(x = "log10") doesn't work
