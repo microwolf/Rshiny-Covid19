@@ -71,8 +71,8 @@ dashboardPage(skin = "green",
                        column(6, plotlyOutput("income")))
               #fluidRow(tableOutput("gdp.table"))
               ), # add gini, top industry, income, unemploye
-      # tab: people --------------------
-      tabItem(tabName = "people", 
+      # tab: population --------------------
+      tabItem(tabName = "population", 
               fluidRow(column(6, plotlyOutput("pop.density")),
                        column(6, plotlyOutput("age55")))
               ), # add old people, sex

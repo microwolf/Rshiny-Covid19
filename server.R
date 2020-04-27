@@ -48,7 +48,6 @@ shinyServer(function(input, output) {
   })
 
   # overview ####
-
   output$case.tested = renderPlotly({
     target = usTodayFilter()
     g = ggplot(data = target, aes(x=log10(tested))) +
@@ -123,10 +122,12 @@ shinyServer(function(input, output) {
     g = ggplot(data = target, aes( y = rate.fatality, x = med_large.airports, label = state)) +
       geom_boxplot(aes(fill = pres.elec.2016), alpha = 0.5) +
       labs(title = "Med-Large Airport Number", x = "airport number", y = "Mortality Rate", shape = "Political Stands", color = "Primary Industry Sector") +
-      theme(plot.title = element_text(hjust = 0.5))
+      theme(plot.title = element_text(hjust = 0.5)) +
+      xlim(-1, 10)
     h = ggplotly(g) %>%
       layout(legend = list(size = 0.4, orientation="h", x = 0,y = -0.5, yanchor="bottom"))
   })
+  
   # economy ####
   output$gdp = renderPlotly({
     target = usTodayFilter()
@@ -176,7 +177,8 @@ shinyServer(function(input, output) {
     h = ggplotly(g) %>% 
       layout(legend = list(size = 0.4, orientation="h", x = 0,y = -0.5, yanchor="bottom"))
   })
-  # people ####
+  
+  # population ####
   output$pop.density = renderPlotly({
     target = usTodayFilter()
     g = ggplot(data = target, aes(y = rate.fatality, x = pop.density, label = state)) +
@@ -255,8 +257,7 @@ shinyServer(function(input, output) {
 })
   
   
- 
-  
+
 
 # pilot test ####
 #test.day = as.Date("2020-03-16")
