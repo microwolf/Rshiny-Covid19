@@ -112,7 +112,7 @@ shinyServer(function(input, output) {
                      color = primary.industry.sector),
                  size = 3) +
       geom_smooth(size=0.5, color = "grey", fill = "wheat", method = "lm") +
-      labs(title = "Urban Percentage of Population ", x = "Urbanization", y = "Mortality Rate", shape = "Political Stands", color = "Primary Industry Sector") +
+      labs(title = "Urbanization ", x = "Urban Percentage of Population", y = "Mortality Rate", shape = "Political Stands", color = "Primary Industry Sector") +
       theme(plot.title = element_text(hjust = 0.5))
     h = ggplotly(g) %>% 
       layout(legend = list(size = 0.4, orientation="h", x = 0,y = -0.5, yanchor="bottom"))
@@ -121,7 +121,7 @@ shinyServer(function(input, output) {
     target = usTodayFilter()
     g = ggplot(data = target, aes( y = rate.fatality, x = med_large.airports, label = state)) +
       geom_boxplot(aes(fill = pres.elec.2016), alpha = 0.5) +
-      labs(title = "Med-Large Airport Number", x = "airport number", y = "Mortality Rate", shape = "Political Stands", color = "Primary Industry Sector") +
+      labs(title = "Med-Large Airport Number", x = "Airport Mumber", y = "Mortality Rate", shape = "Political Stands", color = "Primary Industry Sector") +
       theme(plot.title = element_text(hjust = 0.5)) +
       xlim(-1, 10)
     h = ggplotly(g) %>%
@@ -136,7 +136,7 @@ shinyServer(function(input, output) {
                      color = primary.industry.sector),
                  size = 3) +
       geom_smooth(size=0.5, color = "grey", fill = "wheat", method = "lm") +
-      labs(title = "GDP Per Capita", x = "GDP", y = "Mortality Rate", shape = "Political Stands", color = "Primary Industry Sector") +
+      labs(title = "GDP Per Capita", x = "GDP ($)", y = "Mortality Rate", shape = "Political Stands", color = "Primary Industry Sector") +
       theme(plot.title = element_text(hjust = 0.5))
     h = ggplotly(g) %>% 
       layout(legend = list(size = 0.4, orientation="h", x = 0,y = -0.5, yanchor="bottom"))
@@ -172,7 +172,7 @@ shinyServer(function(input, output) {
                      color = primary.industry.sector),
                  size = 3) +
       geom_smooth(size=0.5, color = "grey", fill = "wheat", method = "lm") +
-      labs(title = "Income Per Capita $", x = "Income", y = "Mortality Rate", shape = "Political Stands", color = "Primary Industry Sector") +
+      labs(title = "Income Per Capita", x = "Income ($)", y = "Mortality Rate", shape = "Political Stands", color = "Primary Industry Sector") +
       theme(plot.title = element_text(hjust = 0.5))
     h = ggplotly(g) %>% 
       layout(legend = list(size = 0.4, orientation="h", x = 0,y = -0.5, yanchor="bottom"))
@@ -186,7 +186,7 @@ shinyServer(function(input, output) {
                      color = primary.industry.sector),
                  size = 3) +
       geom_smooth(size=0.5, color = "grey", fill = "wheat", method = "lm") +
-      labs(title = "Population Density", x = "population density", y = "Mortality Rate", shape = "Political Stands", color = "Primary Industry Sector") +
+      labs(title = "Population Density", x = "Population Density (#/m2)", y = "Mortality Rate", shape = "Political Stands", color = "Primary Industry Sector") +
       theme(plot.title = element_text(hjust = 0.5))
     h = ggplotly(g) %>% 
       layout(legend = list(size = 0.4, orientation="h", x = 0,y = -0.5, yanchor="bottom"))
@@ -236,7 +236,7 @@ shinyServer(function(input, output) {
                      color = primary.industry.sector),
                  size = 3) +
       geom_smooth(size=0.5, color = "grey", fill = "wheat", method = "lm") +
-      labs(title = "Chronic lower respiratory disease death rate per 100,000 people", x = "Respiratory Disease Deaths Rate", y = "Mortality Rate", shape = "Political Stands", color = "Primary Industry Sector") +
+      labs(title = "Chronic Lower Respiratory Disease Death Rate", x = "Respiratory Disease Deaths per 100,000 people", y = "Mortality Rate", shape = "Political Stands", color = "Primary Industry Sector") +
       theme(plot.title = element_text(hjust = 0.5))
     h = ggplotly(g) %>% 
       layout(legend = list(size = 0.4, orientation="h", x = 0,y = -0.5, yanchor="bottom"))
