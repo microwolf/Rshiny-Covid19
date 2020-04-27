@@ -52,7 +52,7 @@ shinyServer(function(input, output) {
     target = usTodayFilter()
     g = ggplot(data = target, aes(x=log10(tested))) +
       geom_histogram(position = "dodge", bins = 10, fill = "darkblue") +
-      labs(title = "Tested #", x = "log10 # of ppl", y = "# of States") +
+      labs(title = "Tested #", x = "Log10 Population", y = "# of States") +
       theme(plot.title = element_text(hjust = 0.5), legend.position="bottom") +
       ylim(0, 15)
     h = ggplotly(g)
@@ -61,7 +61,7 @@ shinyServer(function(input, output) {
     target = usTodayFilter()
     g = ggplot(data = target, aes(x=log10(infected))) +
       geom_histogram(position = "dodge", bins = 10, fill = "darkgoldenrod") +
-      labs(title = "Infected #", x = "log10 # of ppl", y = "# of States") +
+      labs(title = "Infected #", x = "Log10 Population", y = "# of States") +
       theme(plot.title = element_text(hjust = 0.5), legend.position="bottom") +
       ylim(0, 15)
     h = ggplotly(g)
@@ -70,7 +70,7 @@ shinyServer(function(input, output) {
     target = usTodayFilter()
     g = ggplot(data = target, aes(x=log10(deaths))) +
       geom_histogram(position = "dodge", bins = 10, fill = "darkred") +
-      labs(title = "Deaths #", x = "log10 # of ppl", y = "# of States") +
+      labs(title = "Deaths #", x = "Log10 Population", y = "# of States") +
       theme(plot.title = element_text(hjust = 0.5), legend.position="bottom") +
       ylim(0, 15)
     h = ggplotly(g)
