@@ -48,28 +48,60 @@ shinyServer(function(input, output) {
   })
 
   # overview ####
-  output$case = renderPlot({
-    target = usTodayGatherFilter()
-    g = ggplot(data = target, aes(x=log10(number))) +
-      geom_histogram(aes(fill = number.content), position = "dodge", bins = 10) +
-      #geom_density(aes(fill = number.content, color = number.content), alpha = 0.5) +
-      labs(title = "Counts of Covid-19 Cases", x = "Log of Number of People", y = "Count") +
+
+  output$case.tested = renderPlotly({
+    target = usTodayFilter()
+    g = ggplot(data = target, aes(x=log10(tested))) +
+      geom_histogram(position = "dodge", bins = 10, fill = "darkblue") +
+      labs(title = "Tested #", x = "log10 # of ppl", y = "Count") +
       theme(plot.title = element_text(hjust = 0.5), legend.position="bottom") +
-      ylim(0, 65) +
-      facet_grid(~number.content)
-    g
+      ylim(0, 15)
+    h = ggplotly(g)
   })
-  output$ratio = renderPlot({
-    target = usTodayGatherFilter()
-    g = ggplot(data = target, aes(x = ratio)) +
-      geom_histogram(aes(fill = ratio.content), position = "dodge", bins = 5) +
-      facet_grid(~ratio.content) +
-      #geom_density(aes(fill = ratio.content, color = number.content), alpha = 0.5) +
-      labs(title = "Ratios of Covid-19 Cases", x = "Ratio", y = "Count") +
-      theme(plot.title = element_text(hjust = 0.5), legend.position="bottom") + 
-      ylim(0, 150) +
-      facet_grid(~ratio.content)
-    g
+  output$case.infected = renderPlotly({
+    target = usTodayFilter()
+    g = ggplot(data = target, aes(x=log10(infected))) +
+      geom_histogram(position = "dodge", bins = 10, fill = "darkgoldenrod") +
+      labs(title = "Positive #", x = "log10 # of ppl", y = "Count") +
+      theme(plot.title = element_text(hjust = 0.5), legend.position="bottom") +
+      ylim(0, 15)
+    h = ggplotly(g)
+  })
+  output$case.deaths = renderPlotly({
+    target = usTodayFilter()
+    g = ggplot(data = target, aes(x=log10(deaths))) +
+      geom_histogram(position = "dodge", bins = 10, fill = "darkred") +
+      labs(title = "Deaths #", x = "log10 # of ppl", y = "Count") +
+      theme(plot.title = element_text(hjust = 0.5), legend.position="bottom") +
+      ylim(0, 15)
+    h = ggplotly(g)
+  })
+  output$ratio.tested = renderPlotly({
+    target = usTodayFilter()
+    g = ggplot(data = target, aes(x=tested)) +
+      geom_histogram(position = "dodge", bins = 10, fill = "darkblue") +
+      labs(title = "Ratio Tested", x = "log10 # of ppl", y = "Ratio") +
+      theme(plot.title = element_text(hjust = 0.5), legend.position="bottom") +
+      ylim(0, 20)
+    h = ggplotly(g)
+  })
+  output$ratio.infected = renderPlotly({
+    target = usTodayFilter()
+    g = ggplot(data = target, aes(x=rate.positive)) +
+      geom_histogram(position = "dodge", bins = 10, fill = "darkgoldenrod") +
+      labs(title = "Ratio Infected", x = "log10 # of ppl", y = "Ratio") +
+      theme(plot.title = element_text(hjust = 0.5), legend.position="bottom") +
+      ylim(0, 20)
+    h = ggplotly(g)
+  })
+  output$ratio.fatality = renderPlotly({
+    target = usTodayFilter()
+    g = ggplot(data = target, aes(x=rate.fatality)) +
+      geom_histogram(position = "dodge", bins = 10, fill = "darkred") +
+      labs(title = "Ratio Died", x = "log10 # of ppl", y = "Ratio") +
+      theme(plot.title = element_text(hjust = 0.5), legend.position="bottom") +
+      ylim(0, 20)
+    h = ggplotly(g)
   })
   
   # geology ####
@@ -95,18 +127,6 @@ shinyServer(function(input, output) {
     h = ggplotly(g) %>%
       layout(legend = list(size = 0.4, orientation="h", x = 0,y = -0.5, yanchor="bottom"))
   })
-  # output$airport = renderPlotly({
-  #   target = usTodayFilter()
-  #   g = ggplot(data = target, aes( y = rate.fatality, x = med_large.airports, label = state)) +
-  #     geom_point(aes(shape = pres.elec.2016,
-  #                    color = primary.industry.sector),
-  #                size = 3) +
-  #     geom_smooth(size=0.5, color = "grey", fill = "wheat", method = "lm") +
-  #     labs(title = "Med-Large Airport Number", x = "airport number", y = "Mortality Rate", shape = "Political Stands", color = "Primary Industry Sector") +
-  #     theme(plot.title = element_text(hjust = 0.5))
-  #   h = ggplotly(g) %>%
-  #     layout(legend = list(size = 0.4, orientation="h", x = 0,y = -0.5, yanchor="bottom"))
-  # })
   # economy ####
   output$gdp = renderPlotly({
     target = usTodayFilter()
@@ -231,25 +251,12 @@ shinyServer(function(input, output) {
     h = ggplotly(g) %>% 
       layout(legend = list(size = 0.4, orientation="h", x = 0,y = -0.5, yanchor="bottom"))
   })
-  
+
+})
   
   
  
   
-  
-  
-  
-  
-  
-  
-  # test ####
-  # output$test = renderPlot({
-  #   target = usTodayAll()
-  #   ggplot(data = target, aes(x = abbr, y = deaths)) +
-  #     geom_bar(stat = "identity") +
-  #     coord_flip()
-  # })
-})
 
 # pilot test ####
 #test.day = as.Date("2020-03-16")
@@ -274,8 +281,41 @@ shinyServer(function(input, output) {
 #   facet_grid(~number.content) +
 #   theme(legend.position="bottom") #+
 #   #coord_trans(x = "log10")
-
 # historical code ####
+# output$case = renderPlot({
+#   target = usTodayGatherFilter()
+#   g = ggplot(data = target, aes(x=log10(number))) +
+#     geom_histogram(aes(fill = number.content), position = "dodge", bins = 10) +
+#     #geom_density(aes(fill = number.content, color = number.content), alpha = 0.5) +
+#     labs(title = "Counts of Covid-19 Cases", x = "Log of Number of People", y = "Count") +
+#     theme(plot.title = element_text(hjust = 0.5), legend.position="bottom") +
+#     ylim(0, 65) +
+#     facet_grid(~number.content)
+#   g
+# })
+# output$ratio = renderPlot({
+#   target = usTodayGatherFilter() %>% group_by(abbr, ratio) 
+#   g = ggplot(data = target, aes(x = ratio)) +
+#     geom_histogram(aes(fill = ratio.content), position = "dodge", bins = 5) +
+#     #geom_density(aes(fill = ratio.content, color = number.content), alpha = 0.5) +
+#     labs(title = "Ratios of Covid-19 Cases", x = "Ratio", y = "Count") +
+#     theme(plot.title = element_text(hjust = 0.5), legend.position="bottom") + 
+#     ylim(0, 150) +
+#     facet_grid(~ratio.content)
+#   g
+# })
+# output$airport = renderPlotly({
+#   target = usTodayFilter()
+#   g = ggplot(data = target, aes( y = rate.fatality, x = med_large.airports, label = state)) +
+#     geom_point(aes(shape = pres.elec.2016,
+#                    color = primary.industry.sector),
+#                size = 3) +
+#     geom_smooth(size=0.5, color = "grey", fill = "wheat", method = "lm") +
+#     labs(title = "Med-Large Airport Number", x = "airport number", y = "Mortality Rate", shape = "Political Stands", color = "Primary Industry Sector") +
+#     theme(plot.title = element_text(hjust = 0.5))
+#   h = ggplotly(g) %>%
+#     layout(legend = list(size = 0.4, orientation="h", x = 0,y = -0.5, yanchor="bottom"))
+# })
 #output$theDay = renderPrint({input$date})
 
   # usTodayAll = reactive({
@@ -316,8 +356,4 @@ shinyServer(function(input, output) {
 #     theme(legend.position="bottom")
 # })
 
-# politics ####
-# output$pps = renderPlot({
-#   ggplot(data = us, aes(x = pres.elec.2016, y = rate.fatality)) +
-#     geom_boxplot()
-# })
+# politics
